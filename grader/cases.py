@@ -6,11 +6,11 @@ validator = Callable[[str], Tuple[bool, str]]
 def validate(to_compare: str, string_contain: List[str], number: int | float | None = None) -> Tuple[bool, str]:
     valid = True
     to_compare = to_compare.lower()
-    output = "Expect contain "
+    output = ""
 
     for sub in string_contain:
+        output += sub + " "
         if sub.lower() not in to_compare:
-            output += sub + " "
             valid = False
 
     number_found = False
