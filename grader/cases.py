@@ -82,5 +82,61 @@ cases = {
                 expect=lambda x: validate(x, ["1 jam 18 menit 45 detik"])
             )
         ]
+    },
+    "P01": {
+        "01": [
+            TestCase(
+                inputs=["80", "90", "100"],
+                expect=lambda x: validate(x, ["minimum", "diperlukan"], 51.43)
+            ),
+            TestCase(
+                inputs=["20", "85", "50"],
+                expect=lambda x: validate(x, ["tidak", "mungkin"])
+            ),
+            TestCase(
+                inputs=["35", "70", "70"],
+                expect=lambda x: validate(x, ["tidak", "mungkin"])
+            ),
+            TestCase(
+                inputs=["40", "90", "90"],
+                expect=lambda x: validate(x, ["minimum", "diperlukan"], 97.14)
+            ),
+        ],
+        "02": [
+            TestCase(
+                inputs=["400", "3"],
+                expect=lambda x: validate(x, ["324000000"])
+            ),
+            TestCase(
+                inputs=["925", "5"],
+                expect=lambda x: validate(x, ["1774150000"])
+            ),
+            TestCase(
+                inputs=["5000", "4"],
+                expect=lambda x: validate(x, ["7450000000"])
+            ),
+            TestCase(
+                inputs=["250", "3"],
+                expect=lambda x: validate(x, ["121500000"])
+            )
+        ],
+        "03": [
+            TestCase(
+                inputs=["12", "8", "4"],
+                expect=lambda x: validate(x, ["berkesempatan"])
+            ),
+            TestCase(
+                inputs=["12", "8", "0"],
+                expect=lambda x: validate(x, ["tidak"])
+            ),
+            TestCase(
+                inputs=["13", "16", "3"],
+                expect=lambda x: validate(x, ["berkesempatan"])
+            ),
+            TestCase(
+                inputs=["30", "18", "0"],
+                expect=lambda x: validate(x, ["berkesempatan"])
+            )
+        ]
     }
 }
