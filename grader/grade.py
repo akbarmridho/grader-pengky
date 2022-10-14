@@ -12,17 +12,21 @@ def grade_case(file: str, test_case: TestCase) -> TestResult:
                       encoding="utf-8", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         splitted = process.stdout.splitlines()
+
         output = splitted[-1].split(":")[-1].strip()
 
         # if output == "" or output == "\n":
         # output = splitted[-2]
 
+        if not output:
+            output = f"Empty string result. Stacktrace:\n{process.stdout}"
+
         valid, expected = test_case["expect"](output)
 
         return TestResult(expect=expected, got=output, valid=valid)
 
-    except subprocess.CalledProcessError as exc:
-        return TestResult(expect="Program runnable", got=f"Returned {exc.returncode}\n{exc}", valid=False)
+    except Exception as e:
+        return TestResult(expect="Program runnable", got=f"Returned {e}\n", valid=False)
 
 
 def grade_file(file: str, cases: List[TestCase]):

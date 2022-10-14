@@ -4,6 +4,7 @@ from grader.utils.dir import get_files
 from grader.cases import cases
 
 if __name__ == '__main__':
+    # walk sehingga cek tiap folder
     for each in get_files("test"):
         filename = Path(each).name
 

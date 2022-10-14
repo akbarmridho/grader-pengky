@@ -15,19 +15,21 @@ def validate(to_compare: str, string_contain: List[str], number: int | float | N
 
     number_found = False
 
+    if number is not None:
+        output += number.__str__() + " "
+
     for sub in to_compare.split(" "):
         try:
             if type(number) is int:
                 intval = int(sub)
                 number_found = True
-                output += sub + " "
+
                 if intval != number:
                     valid = False
             elif type(number) is float:
                 fval = float(sub)
                 number_found = True
-                output += sub + " "
-                fval = fval.__round__(2)
+
                 if fval != number:
                     valid = False
         except ValueError:
