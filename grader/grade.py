@@ -11,9 +11,19 @@ def grade_case(file: str, test_case: TestCase) -> TestResult:
         process = run(["python", file], input=case_input,
                       encoding="utf-8", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-        splitted = process.stdout.splitlines()
+        start_idx = 0
 
-        output = splitted[-1].split(":")[-1].strip()
+        for i in range(len(test_case['inputs'])):
+            result = process.stdout.find(":", start_idx)
+            if result == -1:
+                raise Exception(
+                    f"Invalid amount of :. Expected {len(test_case['inputs'])} found {i}")
+            start_idx = result + 1
+
+        output = process.stdout[start_idx+1:]
+        # splitted = process.stdout.splitlines()
+
+        # output = splitted[-1].split(":")[-1].strip()
 
         # if output == "" or output == "\n":
         # output = splitted[-2]

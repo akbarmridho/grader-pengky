@@ -140,5 +140,79 @@ cases = {
                 expect=lambda x: validate(x, ["berkesempatan"])
             )
         ]
+    },
+    "H02": {
+        "01": [
+            TestCase(
+                inputs=["12", "2", "3", "4"],
+                expect=lambda x: validate(
+                    x, ["1 Siap Bang SiapJago 5 SiapBang 7 SiapJago Bang Siap 11 SiapBangJago"])
+            ),
+            TestCase(
+                inputs=["5", "1", "1", "1"],
+                expect=lambda x: validate(
+                    x, ["SiapBangJago SiapBangJago SiapBangJago SiapBangJago SiapBangJago"])
+            )
+        ],
+        "02": [
+            TestCase(
+                inputs=["4", "7"],
+                expect=lambda x: validate(x, ["adalah 2", "adalah 7"])
+            ),
+            TestCase(
+                inputs=["2", "2"],
+                expect=lambda x: validate(x, ["adalah 1", "adalah 2"])
+            ),
+            TestCase(
+                inputs=["1", "1"],
+                expect=lambda x: validate(x, ["tidak ditemukan"])
+            )
+        ],
+        "03": [
+            TestCase(
+                inputs=["7"],
+                expect=lambda x: validate(x, ["7"])
+            ),
+            TestCase(
+                inputs=["13"],
+                expect=lambda x: validate(x, ["111111"])
+            ),
+            TestCase(
+                inputs=["259"],
+                expect=lambda x: validate(x, ["777"])
+            )
+        ]
+    },
+    "P02": {
+        "01": [
+            TestCase(inputs=["10", "8", "15", "100", "10"],
+                     expect=lambda x: validate(x, ["75"])),
+            TestCase(inputs=["5", "6", "7", "2022", "2023"],
+                     expect=lambda x: validate(x, ["97"])),
+            TestCase(inputs=["1", "2", "3", "4", "5"],
+                     expect=lambda x: validate(x, ["1"])),
+            TestCase(inputs=["1000", "1001", "1002", "2001", "2002"],
+                     expect=lambda x: validate(x, ["862"]))
+        ],
+        "02": [
+            TestCase(inputs=["3", "5", "75"],
+                     expect=lambda x: validate(x, ["dapat"])),
+            TestCase(inputs=["4", "5", "320"],
+                     expect=lambda x: validate(x, ["tidak"])),
+            TestCase(inputs=["2", "3", "30"],
+                     expect=lambda x: validate(x, ["tidak"])),
+            TestCase(inputs=["5", "10", "2500"],
+                     expect=lambda x: validate(x, ["dapat"]))
+        ],
+        "03": [
+            TestCase(inputs=["3", "3", "3", "3"],
+                     expect=lambda x: validate(x, ["7 10 13"])),
+            TestCase(inputs=["5", "4", "8", "9"],
+                     expect=lambda x: validate(x, ["29 34 39 44 49 54 59 64 69"])),
+            TestCase(inputs=["1", "1", "5", "5"],
+                     expect=lambda x: validate(x, ["5 6 7 8 9"])),
+            TestCase(inputs=["0", "0", "2", "2"],
+                     expect=lambda x: validate(x, ["1 1"]))
+        ]
     }
 }
