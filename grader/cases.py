@@ -3,7 +3,7 @@ from typing import Callable, List, Tuple, TypedDict
 validator = Callable[[str], Tuple[bool, str]]
 
 
-def validate(to_compare: str, string_contain: List[str], number: int | float | None = None) -> Tuple[bool, str]:
+def validate(to_compare: str, string_contain: List[str], number: int | float | None = None, string_not_contain: List[str] | None = None) -> Tuple[bool, str]:
     valid = True
     to_compare = to_compare.lower()
     output = ""
@@ -12,6 +12,12 @@ def validate(to_compare: str, string_contain: List[str], number: int | float | N
         output += sub + " "
         if sub.lower() not in to_compare:
             valid = False
+
+    if valid and string_not_contain is not None:
+        for sub in string_not_contain:
+            output += f"(not contain) {sub} "
+            if sub.lower() in to_compare:
+                valid = False
 
     number_found = False
 
@@ -196,13 +202,13 @@ cases = {
         ],
         "02": [
             TestCase(inputs=["3", "5", "75"],
-                     expect=lambda x: validate(x, ["dapat"])),
+                     expect=lambda x: validate(x, ["dapat"], string_not_contain=["tidak"])),
             TestCase(inputs=["4", "5", "320"],
                      expect=lambda x: validate(x, ["tidak"])),
             TestCase(inputs=["2", "3", "30"],
                      expect=lambda x: validate(x, ["tidak"])),
             TestCase(inputs=["5", "10", "2500"],
-                     expect=lambda x: validate(x, ["dapat"]))
+                     expect=lambda x: validate(x, ["dapat"], string_not_contain=["tidak"]))
         ],
         "03": [
             TestCase(inputs=["3", "3", "3", "3"],
