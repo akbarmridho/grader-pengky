@@ -9,7 +9,8 @@ def grade_case(file: str, test_case: TestCase) -> TestResult:
     try:
         case_input = "".join([each + "\n" for each in test_case["inputs"]])
         process = run(["python", file], input=case_input,
-                      encoding="utf-8", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                      encoding="utf-8", stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                      timeout=1)
 
         start_idx = 0
 
@@ -20,7 +21,7 @@ def grade_case(file: str, test_case: TestCase) -> TestResult:
                     f"Invalid amount of :. Expected {len(test_case['inputs'])} found {i}")
             start_idx = result + 1
 
-        output = process.stdout[start_idx+1:]
+        output = process.stdout[start_idx:]
         # splitted = process.stdout.splitlines()
 
         # output = splitted[-1].split(":")[-1].strip()
@@ -47,7 +48,10 @@ def grade_file(file: str, cases: List[TestCase]):
     with open(outfile, "w") as f:
         for i in range(len(cases)):
             result = grade_case(file, cases[i])
+            f.write(20*"=" + "\n")
             f.write(f"Test Case {i+1}\n")
+
+            f.write("Input: " + " ".join(cases[i]["inputs"]) + "\n")
 
             f.write(
                 f'Expected: {result["expect"]}\nGot: {result["got"]}\n')
@@ -55,5 +59,9 @@ def grade_file(file: str, cases: List[TestCase]):
             if result["valid"]:
                 f.write("VALID\n")
                 valid_count += 1
+            else:
+                f.write("NOT VALID\n")
+
+            f.write(20*"=" + "\n")
 
         f.write(f"Valid {valid_count} out of {len(cases)}")
