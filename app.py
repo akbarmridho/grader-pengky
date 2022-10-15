@@ -8,7 +8,11 @@ if __name__ == '__main__':
     for each in get_files("test"):
         filename = Path(each).name
 
-        problem_set = filename[:3]
+        problem_set = filename[:3].upper()
+
+        if filename.endswith(".py.py"):
+            filename = filename[:-3]
+
         problem_number = filename.split("_")[-1][-5:-3]
 
         case_set = cases[problem_set][problem_number]
